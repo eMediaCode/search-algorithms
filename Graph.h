@@ -14,13 +14,13 @@ using namespace std;
 class Graph {
 	int size;
 	list<int> *adjacent;
-	void DFSHelper(int node, bool visited[]);
+	void DFSHelper(int node, int goal, bool visited[]);
 public:
 	Graph(int size);
 	virtual ~Graph();
 	void addEdge(int node1, int node2);
-	void DFS(int node);
-	void BFS(int node);
+	void DFS(int node, int goal);
+	void BFS(int node, int goal);
 };
 
 #endif /* GRAPH_H_ */
