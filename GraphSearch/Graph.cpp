@@ -82,6 +82,7 @@ void Graph::BFS(int node, int goal) {
 
 		// Check if goal has been visited
 		if (goal == node) {
+			cout << endl;
 			return;
 		}
 
@@ -95,8 +96,6 @@ void Graph::BFS(int node, int goal) {
 			}
 		}
 	}
-
-	cout << endl;
 }
 
 int main() {
