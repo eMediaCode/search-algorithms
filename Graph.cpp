@@ -488,6 +488,13 @@ void Graph::displayPath(struct priorityQueue p)
 
 int main() {
 
+	// Information
+	cout << "--- Search Algorithms (Project 1) ---" << endl << endl;
+	cout << "NAME: Vivian Nathaniel Arul Rajkumar" << endl;
+	cout << "STUDENT ID: 20242020" << endl;
+	cout << "E-MAIL: vnar@connect.ust.hk" << endl;
+	cout << "COURSE: COMP 3211 (Spring 2017)" << endl << endl;
+
 	// GRAPH 1
 
 	// Set-up
@@ -635,7 +642,7 @@ int main() {
 	g5.AStarGS(0, 5);
 	cout << endl << endl;
 
-	cout << "-------------- END --------------" << endl;
+	cout << "---------------- END ----------------" << endl;
 
 	return 0;
 }
