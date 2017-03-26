@@ -2,7 +2,11 @@
  * Graph.cpp
  *
  *  Created on: 1 Mar 2017
- *      Author: Vivian Rajkumar
+ *      Student Name: Vivian Nathaniel Arul Rajkumar
+ *      ID: 20242020
+ *      E-mail: vnar@connect.ust.hk
+ *
+ *      COMP 3211 (Spring 2017)
  */
 
 #include "Graph.h"
@@ -12,6 +16,7 @@
 #include <queue>
 #include <algorithm>
 #include <stdlib.h>
+#include <set>
 
 using namespace std;
 
@@ -41,11 +46,18 @@ Graph::~Graph() {
 void Graph::addEdge(int node1, int node2) {
 	adjacent[node1].push_back(node2);
 	weight[node1].push_back(0);
+	h_cost[node2] = 0;
 }
 
 void Graph::addEdge(int node1, int node2, int w) {
 	adjacent[node1].push_back(node2);
 	weight[node1].push_back(w);
+}
+
+void Graph::addEdge(int node1, int node2, int w, int h) {
+	adjacent[node1].push_back(node2);
+	weight[node1].push_back(w);
+	h_cost[node2] = h;
 }
 
 void Graph::DFSHelper(int start, int goal, bool visited[]) {
@@ -220,8 +232,6 @@ void Graph::UCS(int start, int goal) {
 		cPQ = pq.top();
 		pq.pop();
 
-		// If priorities are the same, choose alphabetically smaller path
-
 		// If path is ending in the goal state, print path and exit
 		if (cur == goal) {
 			displayPath(cPQ);
@@ -262,8 +272,6 @@ void Graph::UCS(int start, int goal1, int goal2) {
 		cPQ = pq.top();
 		pq.pop();
 
-		// If priorities are the same, choose alphabetically smaller path
-
 		// If path is ending in the goal state, print path and exit
 		if (cur == goal1 || cur == goal2) {
 			displayPath(cPQ);
@@ -283,11 +291,182 @@ void Graph::UCS(int start, int goal1, int goal2) {
 }
 
 void Graph::AStarTS(int start, int goal) {
+	int cur = 0;
+	int pos = 0;
+	priority_queue<priorityQueue,vector<priorityQueue>,comparison> pq;
+	priorityQueue s;
 
+	// Insert root into queue
+	s.path.push_back(start);
+	s.cost = 0;
+
+	vector<int>::iterator i;
+	pq.push(s);
+
+	// While queue is not empty
+	while (!pq.empty()) {
+		priorityQueue cPQ, tPQ;
+
+		// Dequeue max priority element from queue
+		cur = pq.top().path.back();
+		cPQ = pq.top();
+		pq.pop();
+
+		// If path is ending in the goal state, print path and exit
+		if (cur == goal) {
+			displayPath(cPQ);
+			return;
+		}
+		else {
+			// Insert all children of the dequeued element, with f-costs (f_cost = g_cost + h_cost) as priority
+			for(i = adjacent[cur].begin(); i != adjacent[cur].end(); ++i) {
+				tPQ = cPQ;
+				tPQ.path.push_back(*i);
+				pos = find(adjacent[cur].begin(), adjacent[cur].end(), *i) - adjacent[cur].begin();
+				tPQ.cost = (tPQ.cost + weight[cur].at(pos) + h_cost[cur]);
+				pq.push(tPQ);
+			}
+		}
+	}
 }
 
-void Graph::AStarGS(int start, int goal) {
+void Graph::AStarTS(int start, int goal1, int goal2) {
+	int cur = 0;
+	int pos = 0;
+	priority_queue<priorityQueue,vector<priorityQueue>,comparison> pq;
+	priorityQueue s;
 
+	// Insert root into queue
+	s.path.push_back(start);
+	s.cost = 0;
+
+	vector<int>::iterator i;
+	pq.push(s);
+
+	// While queue is not empty
+	while (!pq.empty()) {
+		priorityQueue cPQ, tPQ;
+
+		// Dequeue max priority element from queue
+		cur = pq.top().path.back();
+		cPQ = pq.top();
+		pq.pop();
+
+		// If path is ending in the goal state, print path and exit
+		if (cur == goal1 || cur == goal2) {
+			displayPath(cPQ);
+			return;
+		}
+		else {
+			// Insert all children of the dequeued element, with f-costs (f_cost = g_cost + h_cost) as priority
+			for(i = adjacent[cur].begin(); i != adjacent[cur].end(); ++i) {
+				tPQ = cPQ;
+				tPQ.path.push_back(*i);
+				pos = find(adjacent[cur].begin(), adjacent[cur].end(), *i) - adjacent[cur].begin();
+				tPQ.cost = (tPQ.cost + weight[cur].at(pos) + h_cost[cur]);
+				pq.push(tPQ);
+			}
+		}
+	}
+}
+
+
+void Graph::AStarGS(int start, int goal) {
+	// Explored nodes
+	set<int> explored;
+
+	int cur = 0;
+	int pos = 0;
+	priority_queue<priorityQueue,vector<priorityQueue>,comparison> pq;
+	priorityQueue s;
+
+	// Insert root into queue
+	s.path.push_back(start);
+	s.cost = 0;
+
+	vector<int>::iterator i;
+	pq.push(s);
+
+	// While queue is not empty
+	while (!pq.empty()) {
+		priorityQueue cPQ, tPQ;
+
+		// Dequeue max priority element from queue
+		cur = pq.top().path.back();
+		cPQ = pq.top();
+		pq.pop();
+
+		// If path is ending in the goal state, print path and exit
+		if (cur == goal) {
+			displayPath(cPQ);
+			return;
+		}
+		else {
+			// Insert all children of the dequeued element, with f-costs (f_cost = g_cost + h_cost) as priority
+			for(i = adjacent[cur].begin(); i != adjacent[cur].end(); ++i) {
+				// Check if node already explored
+				if(explored.find(cur) != explored.end()) {
+					continue;
+				}
+				else {
+					tPQ = cPQ;
+					tPQ.path.push_back(*i);
+					pos = find(adjacent[cur].begin(), adjacent[cur].end(), *i) - adjacent[cur].begin();
+					tPQ.cost = (tPQ.cost + weight[cur].at(pos) + h_cost[cur]);
+					pq.push(tPQ);
+				}
+			}
+		}
+	}
+}
+
+void Graph::AStarGS(int start, int goal1, int goal2) {
+	// Explored nodes
+	set<int> explored;
+
+	int cur = 0;
+	int pos = 0;
+	priority_queue<priorityQueue,vector<priorityQueue>,comparison> pq;
+	priorityQueue s;
+
+	// Insert root into queue
+	s.path.push_back(start);
+	s.cost = 0;
+
+	vector<int>::iterator i;
+	pq.push(s);
+
+	// While queue is not empty
+	while (!pq.empty()) {
+		priorityQueue cPQ, tPQ;
+
+		// Dequeue max priority element from queue
+		cur = pq.top().path.back();
+		cPQ = pq.top();
+		pq.pop();
+
+		// If path is ending in the goal state, print path and exit
+		if (cur == goal1 || cur == goal2) {
+			displayPath(cPQ);
+			return;
+		}
+		else {
+			// Insert all children of the dequeued element, with f-costs (f_cost = g_cost + h_cost) as priority
+			for(i = adjacent[cur].begin(); i != adjacent[cur].end(); ++i) {
+				// Check if node already explored
+				if(explored.find(cur) != explored.end()) {
+					continue;
+				}
+				else {
+					tPQ = cPQ;
+					tPQ.path.push_back(*i);
+					pos = find(adjacent[cur].begin(), adjacent[cur].end(), *i) - adjacent[cur].begin();
+					tPQ.cost = (tPQ.cost + weight[cur].at(pos) + h_cost[cur]);
+					pq.push(tPQ);
+				}
+			}
+		}
+	}
 }
 
 void Graph::displayPath(struct priorityQueue p)
@@ -349,17 +528,17 @@ int main() {
 
 	// Graph 4
 	Graph g4(9);
-	g4.addEdge(0, 1, 1);
-	g4.addEdge(0, 2, 3);
-	g4.addEdge(1, 4, 2);
+	g4.addEdge(0, 1, 1, 8); // 0 is S, 1 is A
+	g4.addEdge(0, 2, 3, 6); // 2 is B
+	g4.addEdge(1, 4, 2, 1); // 4 is D
 	g4.addEdge(2, 4, 8);
-	g4.addEdge(2, 5, 5);
-	g4.addEdge(3, 1, 1);
-	g4.addEdge(3, 7, 4);
-	g4.addEdge(4, 3, 5);
+	g4.addEdge(2, 5, 5, 3); // 5 is E
+	g4.addEdge(3, 1, 1); // 3 is C
+	g4.addEdge(3, 7, 4, 0); // 7 is G1
+	g4.addEdge(4, 3, 5, 3);
 	g4.addEdge(4, 7, 14);
-	g4.addEdge(4, 8, 6);
-	g4.addEdge(5, 6, 1);
+	g4.addEdge(4, 8, 6, 0); // 8 is G2
+	g4.addEdge(5, 6, 1, 2); // 6 is F
 	g4.addEdge(5, 8, 4);
 	g4.addEdge(6, 8, 2);
 	g4.addEdge(7, 8, 0);
@@ -367,25 +546,28 @@ int main() {
 	g4.DFS(0, 7, 8);
 	g4.BFS(0, 7, 8);
 	g4.UCS(0, 7, 8);
+	g4.AStarTS(0, 7, 8);
+	g4.AStarGS(0, 7, 8);
 	cout << endl;
 
 	// Graph 5
 	Graph g5(6);
-	g5.addEdge(0, 1, 2);
-	g5.addEdge(0, 2, 1);
+	g5.addEdge(0, 1, 2, 3); // 0 is S, 1 is A
+	g5.addEdge(0, 2, 1, 3); // 2 is B
 	g5.addEdge(1, 2, 1);
-	g5.addEdge(1, 3, 3);
-	g5.addEdge(1, 4, 1);
+	g5.addEdge(1, 3, 3, 1); // 3 is C
+	g5.addEdge(1, 4, 1, 2); // 4 is D
 	g5.addEdge(2, 4, 5);
-	g5.addEdge(2, 5, 10);
+	g5.addEdge(2, 5, 10, 0); // 5 is G
 	g5.addEdge(3, 5, 7);
 	g5.addEdge(4, 5, 4);
 
 	g5.DFS(0, 5);
 	g5.BFS(0, 5);
 	g5.UCS(0, 5);
+	g5.AStarTS(0, 5);
+	g5.AStarGS(0, 5);
 	cout << endl;
-
 
 	return 0;
 }
