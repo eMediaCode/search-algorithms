@@ -225,7 +225,7 @@ void Graph::UCS(int start, int goal) {
 		// If path is ending in the goal state, print path and exit
 		if (cur == goal) {
 			displayPath(cPQ);
-			exit(0);
+			return;
 		}
 		else {
 			// Insert all children of the dequeued element, with cumulative costs as priority
@@ -267,7 +267,7 @@ void Graph::UCS(int start, int goal1, int goal2) {
 		// If path is ending in the goal state, print path and exit
 		if (cur == goal1 || cur == goal2) {
 			displayPath(cPQ);
-			exit(0);
+			return;
 		}
 		else {
 			// Insert all children of the dequeued element, with cumulative costs as priority
@@ -381,10 +381,11 @@ int main() {
 	g5.addEdge(3, 5, 7);
 	g5.addEdge(4, 5, 4);
 
-//	g5.DFS(0, 5);
-//	g5.BFS(0, 5);
-//	g5.UCS(0, 5);
+	g5.DFS(0, 5);
+	g5.BFS(0, 5);
+	g5.UCS(0, 5);
 	cout << endl;
+
 
 	return 0;
 }
