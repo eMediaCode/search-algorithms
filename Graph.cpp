@@ -488,7 +488,9 @@ void Graph::displayPath(struct priorityQueue p)
 
 int main() {
 
-	// Graph 1
+	// GRAPH 1
+
+	// Set-up
 	Graph g1(5);
 	g1.addEdge(0, 1); // 0 is S, 1 is A
 	g1.addEdge(0, 2); // 2 is B
@@ -497,11 +499,22 @@ int main() {
 	g1.addEdge(2, 3); // 3 is C
 	g1.addEdge(3, 4);
 
+	// Output
+	cout << "-------------- GRAPH 1 --------------" << endl << endl;
+	cout << "S node : 0" << endl;
+	cout << "A node : 1" << endl;
+	cout << "B node : 2" << endl;
+	cout << "C node : 3" << endl;
+	cout << "G node : 4" << endl << endl;
+	cout << "Depth-First Search: ";
 	g1.DFS(0, 4);
+	cout << "Breadth-First Search: ";
 	g1.BFS(0, 4);
-	cout << endl;
+	cout << endl << endl;
 
-	// Graph 2
+	// GRAPH 2
+
+	// Set-up
 	Graph g2(5);
 	g2.addEdge(0, 2); // 0 is S, 3 is C
 	g2.addEdge(0, 3); // 2 is B
@@ -509,11 +522,22 @@ int main() {
 	g2.addEdge(2, 1); // 1 is A
 	g2.addEdge(3, 2);
 
+	// Output
+	cout << "-------------- GRAPH 2 --------------" << endl << endl;
+	cout << "S node : 0" << endl;
+	cout << "A node : 1" << endl;
+	cout << "B node : 2" << endl;
+	cout << "C node : 3" << endl;
+	cout << "G node : 4" << endl << endl;
+	cout << "Depth-First Search: ";
 	g2.DFS(0, 4);
+	cout << "Breadth-First Search: ";
 	g2.BFS(0, 4);
-	cout << endl;
+	cout << endl << endl;
 
-	// Graph 3
+	// GRAPH 3
+
+	// Set-up
 	Graph g3(5);
 	g3.addEdge(0, 1); // 0 is S, 1 is B
 	g3.addEdge(0, 2); // 2 is C
@@ -522,11 +546,22 @@ int main() {
 	g3.addEdge(2, 3);
 	g3.addEdge(3, 4);
 
+	// Output
+	cout << "-------------- GRAPH 3 --------------" << endl << endl;
+	cout << "S node : 0" << endl;
+	cout << "A node : 3" << endl;
+	cout << "B node : 1" << endl;
+	cout << "C node : 2" << endl;
+	cout << "G node : 4" << endl << endl;
+	cout << "Depth-First Search: ";
 	g3.DFS(0, 4);
+	cout << "Breadth-First Search: ";
 	g3.BFS(0, 4);
-	cout << endl;
+	cout << endl << endl;
 
-	// Graph 4
+	// GRAPH 4
+
+	// Set-up
 	Graph g4(9);
 	g4.addEdge(0, 1, 1, 8); // 0 is S, 1 is A
 	g4.addEdge(0, 2, 3, 6); // 2 is B
@@ -543,31 +578,64 @@ int main() {
 	g4.addEdge(6, 8, 2);
 	g4.addEdge(7, 8, 0);
 
+	// Output
+	cout << "-------------- GRAPH 4 --------------" << endl << endl;
+	cout << "S node : 0" << endl;
+	cout << "A node : 1" << endl;
+	cout << "B node : 2" << endl;
+	cout << "C node : 3" << endl;
+	cout << "D node : 4" << endl;
+	cout << "E node : 5" << endl;
+	cout << "F node : 6" << endl;
+	cout << "G1 node : 7" << endl;
+	cout << "G2 node : 8" << endl << endl;
+	cout << "Depth-First Search: ";
 	g4.DFS(0, 7, 8);
+	cout << "Breadth-First Search: ";
 	g4.BFS(0, 7, 8);
+	cout << "Uniform Cost Search: ";
 	g4.UCS(0, 7, 8);
+	cout << "A* Tree Search: ";
 	g4.AStarTS(0, 7, 8);
+	cout << "A* Graph Search: ";
 	g4.AStarGS(0, 7, 8);
-	cout << endl;
+	cout << endl << endl;
 
-	// Graph 5
+	// GRAPH 5
+
+	// Set-up
 	Graph g5(6);
-	g5.addEdge(0, 1, 2, 3); // 0 is S, 1 is A
+	g5.addEdge(0, 1, 2, 3); // 0 is Start, 1 is A
 	g5.addEdge(0, 2, 1, 3); // 2 is B
 	g5.addEdge(1, 2, 1);
 	g5.addEdge(1, 3, 3, 1); // 3 is C
 	g5.addEdge(1, 4, 1, 2); // 4 is D
 	g5.addEdge(2, 4, 5);
-	g5.addEdge(2, 5, 10, 0); // 5 is G
+	g5.addEdge(2, 5, 10, 0); // 5 is Goal
 	g5.addEdge(3, 5, 7);
 	g5.addEdge(4, 5, 4);
 
+	// Output
+	cout << "-------------- GRAPH 5 --------------" << endl << endl;
+	cout << "Start node : 0" << endl;
+	cout << "A node : 1" << endl;
+	cout << "B node : 2" << endl;
+	cout << "C node : 3" << endl;
+	cout << "D node : 4" << endl;
+	cout << "Goal node : 5" << endl << endl;
+	cout << "Depth-First Search: ";
 	g5.DFS(0, 5);
+	cout << "Breadth-First Search: ";
 	g5.BFS(0, 5);
+	cout << "Uniform Cost Search: ";
 	g5.UCS(0, 5);
+	cout << "A* Tree Search: ";
 	g5.AStarTS(0, 5);
+	cout << "A* Graph Search: ";
 	g5.AStarGS(0, 5);
-	cout << endl;
+	cout << endl << endl;
+
+	cout << "-------------- END --------------" << endl;
 
 	return 0;
 }
