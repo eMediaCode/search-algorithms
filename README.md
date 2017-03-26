@@ -11,19 +11,19 @@
 
 ## Graphs
 #### Graph 1
-<img src="http://i.imgur.com/tH5M69U.png" width="150"/>
+<img src="http://i.imgur.com/PPDPSSL.png" width="150"/>
 
 #### Graph 2
-<img src="http://i.imgur.com/lfmmSVD.png" width="150"/>
+<img src="http://i.imgur.com/nax1gCt.png" width="150"/>
 
 #### Graph 3
-<img src="http://i.imgur.com/PlqGdlx.png" width="150"/>
+<img src="http://i.imgur.com/ReX3Eow.png" width="150"/>
 
 #### Graph 4
-<img src="http://i.imgur.com/iGs1nKk.png" width="400"/>
+<img src="http://i.imgur.com/48qP96j.png" width="400"/>
 
 #### Graph 5
-<img src="http://i.imgur.com/j2vWjK8.png" width="400"/>
+<img src="http://i.imgur.com/9o38T1a.png" width="400"/>
 
 ## Running the Program
 #### Terminal (Mac)
